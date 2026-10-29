@@ -1,7 +1,7 @@
 "use client";
 export default function ErrorPage({ reset }: { reset: () => void }) {
   return (
-    <main className="auth-page">
+    <main id="main-content" tabIndex={-1} className="auth-page">
       <div className="auth-box">
         <h1>Не удалось загрузить страницу</h1>
         <p>

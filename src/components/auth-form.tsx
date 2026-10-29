@@ -43,6 +43,7 @@ export function AuthForm({ register = false }: { register?: boolean }) {
             Комната
             <input
               name="room"
+              autoComplete="off"
               required
               maxLength={12}
               placeholder="Например, 412"
@@ -57,6 +58,7 @@ export function AuthForm({ register = false }: { register?: boolean }) {
           type="email"
           required
           autoComplete="email"
+          spellCheck={false}
           placeholder="you@example.ru"
         />
       </label>

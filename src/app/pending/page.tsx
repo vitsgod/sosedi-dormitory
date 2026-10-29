@@ -8,7 +8,7 @@ export default async function Pending() {
   if (!u) redirect("/login");
   if (u.status === "APPROVED") redirect("/app");
   return (
-    <main className="auth-page">
+    <main id="main-content" tabIndex={-1} className="auth-page">
       <Brand />
       <div className="auth-box pending-box">
         <Clock3 size={44} />

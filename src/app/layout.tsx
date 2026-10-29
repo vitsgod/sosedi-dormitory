@@ -1,5 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { ThemeProvider } from "../components/theme-provider";
+import { themeBootstrap } from "../lib/theme";
 import "./globals.css";
+import "./design-system.css";
+export const viewport: Viewport = { themeColor: "#f3f5f8" };
 export const metadata: Metadata = {
   title: { default: "Соседи — общежитие № 4", template: "%s · Соседи" },
   icons: { icon: "/icon.svg" },
@@ -8,8 +12,23 @@ export const metadata: Metadata = {
 };
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ru">
-      <body>{children}</body>
+    <html lang="ru" suppressHydrationWarning>
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/manrope.ttf"
+          as="font"
+          type="font/ttf"
+          crossOrigin="anonymous"
+        />
+        <script dangerouslySetInnerHTML={{ __html: themeBootstrap }} />
+      </head>
+      <body>
+        <a href="#main-content" className="skip-link">
+          Перейти к содержимому
+        </a>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

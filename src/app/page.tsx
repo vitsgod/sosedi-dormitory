@@ -15,6 +15,7 @@ import {
 import { Brand } from "../components/brand";
 import { DemoButtons } from "../components/demo-buttons";
 import { Building } from "../components/building";
+import { ThemeMenu } from "../components/theme-provider";
 import { getPublicAnnouncements } from "../lib/dashboard";
 export const dynamic = "force-dynamic";
 const categories: Record<string, string> = {
@@ -34,12 +35,15 @@ export default async function Home() {
             <a href="#services">Сервисы</a>
             <a href="#about">Об общежитии</a>
           </nav>
-          <Link href="/login" className="button secondary">
-            Войти <ArrowUpRight size={16} />
-          </Link>
+          <div className="header-actions">
+            <ThemeMenu />
+            <Link href="/login" className="button secondary">
+              Войти <ArrowUpRight size={16} />
+            </Link>
+          </div>
         </div>
       </header>
-      <main className="wide public-main">
+      <main id="main-content" tabIndex={-1} className="wide public-main">
         <section className="hero">
           <div className="hero-copy">
             <div className="location-line">

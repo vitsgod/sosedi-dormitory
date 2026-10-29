@@ -22,7 +22,9 @@ import {
   Pin,
   CalendarDays,
   Menu,
+  Settings2,
 } from "lucide-react";
+import { AppearanceSettings, ThemeMenu } from "./theme-provider";
 import { Brand } from "./brand";
 import { DemoButtons } from "./demo-buttons";
 import type { getDashboard } from "../lib/dashboard";
@@ -175,6 +177,7 @@ export function Dashboard({ initial }: { initial: Data }) {
           { id: "machines", label: "Стиральные машины", icon: WashingMachine },
         ]
       : []),
+    { id: "settings", label: "Настройки", icon: Settings2 },
   ];
   function go(id: string) {
     router.push(`/app?tab=${id}`);
@@ -256,10 +259,12 @@ export function Dashboard({ initial }: { initial: Data }) {
         </div>
         <nav aria-label="Личный кабинет">
           {nav.map((n) => (
-            <button
+            <Link
               key={n.id}
+              href={`/app?tab=${n.id}`}
+              aria-current={tab === n.id ? "page" : undefined}
               className={`nav-item ${tab === n.id ? "active" : ""}`}
-              onClick={() => go(n.id)}
+              onClick={() => setMenu(false)}
             >
               <n.icon size={19} />
               {n.label}
@@ -269,7 +274,7 @@ export function Dashboard({ initial }: { initial: Data }) {
                     {data.requests.filter((r) => r.status !== "DONE").length}
                   </span>
                 )}
-            </button>
+            </Link>
           ))}
         </nav>
         <div className="sidebar-bottom">
@@ -310,16 +315,19 @@ export function Dashboard({ initial }: { initial: Data }) {
             Общежитие № 4 <ChevronRight size={14} />
             <span>{sectionTitle}</span>
           </div>
-          <button
-            className={`notification-button ${tab === "notifications" ? "selected" : ""}`}
-            onClick={() => go("notifications")}
-            aria-label={`Уведомления: ${unread} непрочитанных`}
-          >
-            <Bell size={20} />
-            {unread > 0 && <span>{unread}</span>}
-          </button>
+          <div className="header-actions">
+            <ThemeMenu />
+            <Link
+              className={`notification-button ${tab === "notifications" ? "selected" : ""}`}
+              href="/app?tab=notifications"
+              aria-label={`Уведомления: ${unread} непрочитанных`}
+            >
+              <Bell size={20} />
+              {unread > 0 && <span>{unread}</span>}
+            </Link>
+          </div>
         </header>
-        <main className="app-main">
+        <main className="app-main" id="main-content" tabIndex={-1}>
           {u.isDemo && (
             <div className="demo-banner">
               <span>
@@ -415,10 +423,7 @@ export function Dashboard({ initial }: { initial: Data }) {
                   </div>
                   {resident ? (
                     <>
-                      <button
-                        className="primary-job"
-                        onClick={() => go("laundry")}
-                      >
+                      <Link className="primary-job" href="/app?tab=laundry">
                         <WashingMachine size={33} strokeWidth={1.4} />
                         <div>
                           <h3>
@@ -428,7 +433,7 @@ export function Dashboard({ initial }: { initial: Data }) {
                           <p>5 машинок. Без очереди с корзиной.</p>
                         </div>
                         <ArrowUpRight size={24} />
-                      </button>
+                      </Link>
                       <div className="quick-actions">
                         <button onClick={() => setModal("request")}>
                           <Wrench size={21} />
@@ -501,12 +506,9 @@ export function Dashboard({ initial }: { initial: Data }) {
                           {mine[0].durationMinutes} мин
                         </p>
                         <Badge status={mine[0].status} />
-                        <button
-                          className="text-link"
-                          onClick={() => go("laundry")}
-                        >
+                        <Link className="text-link" href="/app?tab=laundry">
                           Мои записи <ArrowRight size={16} />
-                        </button>
+                        </Link>
                       </>
                     ) : (
                       <>
@@ -519,12 +521,9 @@ export function Dashboard({ initial }: { initial: Data }) {
                           <br />
                           Самое время выбрать сеанс.
                         </p>
-                        <button
-                          className="text-link"
-                          onClick={() => go("laundry")}
-                        >
+                        <Link className="text-link" href="/app?tab=laundry">
                           Записаться <ArrowRight size={16} />
-                        </button>
+                        </Link>
                       </>
                     )
                   ) : (
@@ -553,12 +552,9 @@ export function Dashboard({ initial }: { initial: Data }) {
                           ? "Заявки жильцов"
                           : "Мои заявки"}
                     </h2>
-                    <button
-                      className="text-link"
-                      onClick={() => go("requests")}
-                    >
+                    <Link className="text-link" href="/app?tab=requests">
                       Все <ArrowRight size={15} />
-                    </button>
+                    </Link>
                   </div>
                   <RequestList
                     items={data.requests.slice(0, 3)}
@@ -570,18 +566,15 @@ export function Dashboard({ initial }: { initial: Data }) {
                 <section className="panel">
                   <div className="panel-title">
                     <h2>Новости дома</h2>
-                    <button
-                      className="text-link"
-                      onClick={() => go("announcements")}
-                    >
+                    <Link className="text-link" href="/app?tab=announcements">
                       Все <ArrowRight size={15} />
-                    </button>
+                    </Link>
                   </div>
                   {data.announcements.slice(0, 3).map((a) => (
-                    <button
+                    <Link
                       key={a.id}
                       className="mini-notice"
-                      onClick={() => go("announcements")}
+                      href="/app?tab=announcements"
                     >
                       <span
                         className={`notice-dot ${a.category.toLowerCase()}`}
@@ -597,7 +590,7 @@ export function Dashboard({ initial }: { initial: Data }) {
                       ) : (
                         <ChevronRight size={16} />
                       )}
-                    </button>
+                    </Link>
                   ))}
                   {!data.announcements.length && (
                     <Empty text="Новых объявлений пока нет." />
@@ -918,6 +911,7 @@ export function Dashboard({ initial }: { initial: Data }) {
               </div>
             </section>
           )}
+          {tab === "settings" && <AppearanceSettings />}
           {tab === "machines" && admin && (
             <section className="panel">
               {data.machines.map((m) => (
@@ -1057,6 +1051,7 @@ function Attachments({ ids }: { ids: { id: string }[] }) {
           rel="noreferrer"
         >
           <img
+            loading="lazy"
             src={`/api/files/${f.id}`}
             width="96"
             height="72"

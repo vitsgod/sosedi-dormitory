@@ -3,7 +3,7 @@ import { AuthForm } from "../../components/auth-form";
 import { DemoButtons } from "../../components/demo-buttons";
 export default function Login() {
   return (
-    <main className="auth-page">
+    <main id="main-content" tabIndex={-1} className="auth-page">
       <Brand />
       <div className="auth-box">
         <h1>Снова дома</h1>
