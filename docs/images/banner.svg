@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title description">
+  <title id="title">Соседи — один дом, один сервис</title>
+  <desc id="description">Fullstack-сервис общежития: объявления, прачечная, помощь мастера и личные обращения.</desc>
+  <rect width="1280" height="360" rx="24" fill="#101722"/>
+  <path d="M905 360V86L1012 35L1119 86V360" fill="#1b2b42"/><path d="M1031 360V164L1138 113L1245 164V360" fill="#243955"/>
+  <g fill="#97b7f1"><rect x="932" y="116" width="28" height="35" rx="3"/><rect x="983" y="116" width="28" height="35" rx="3"/><rect x="1034" y="116" width="28" height="35" rx="3"/><rect x="932" y="178" width="28" height="35" rx="3"/><rect x="983" y="178" width="28" height="35" rx="3"/><rect x="932" y="240" width="28" height="35" rx="3"/></g>
+  <g fill="#4b658d"><rect x="1060" y="190" width="28" height="35" rx="3"/><rect x="1110" y="190" width="28" height="35" rx="3"/><rect x="1160" y="190" width="28" height="35" rx="3"/><rect x="1060" y="251" width="28" height="35" rx="3"/><rect x="1110" y="251" width="28" height="35" rx="3"/><rect x="1160" y="251" width="28" height="35" rx="3"/></g>
+  <path d="M64 100V55l22-11 22 11v45H64Z" fill="none" stroke="#9bbcff" stroke-width="4" stroke-linejoin="round"/><path d="M76 64v6m20-6v6m-20 11v6m20-6v6m-10 13V90" stroke="#9bbcff" stroke-width="4"/>
+  <text x="132" y="92" fill="#eef3fb" font-family="Arial,sans-serif" font-size="48" font-weight="700" letter-spacing="-2">соседи</text>
+  <text x="64" y="182" fill="#eef3fb" font-family="Arial,sans-serif" font-size="43" font-weight="700" letter-spacing="-1">Один дом. Один сервис.</text>
+  <text x="64" y="230" fill="#b9c8dc" font-family="Arial,sans-serif" font-size="21">Запись на стирку, помощь мастера и жизнь общежития.</text>
+  <rect x="64" y="270" width="520" height="40" rx="8" fill="#203650"/>
+  <text x="82" y="296" fill="#b8cefa" font-family="Arial,sans-serif" font-size="16">Next.js · TypeScript · PostgreSQL · Fullstack portfolio</text>
+</svg>
