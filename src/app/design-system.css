@@ -448,12 +448,17 @@ p {
   height: 44px;
 }
 .notification-button > span {
+  display: grid;
+  place-items: center;
+  padding: 0 4px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
   background: var(--accent);
   color: var(--accent-ink);
   font-size: 10px;
   min-width: 18px;
   height: 18px;
-  line-height: 18px;
+  line-height: 1;
 }
 .app-main {
   padding: 28px 36px 0;
