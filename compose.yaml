@@ -1,0 +1,57 @@
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: dormitory
+      POSTGRES_USER: dormitory
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Set DB_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dormitory -d dormitory"]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+  migrate:
+    build: .
+    command: sh -c "npm run db:migrate && npm run db:seed"
+    environment: &app-env
+      DATABASE_URL: postgresql://dormitory:${DB_PASSWORD}@db:5432/dormitory
+      APP_ORIGIN: ${APP_ORIGIN:-http://localhost:3000}
+      DEMO_ENABLED: ${DEMO_ENABLED:-true}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      UPLOAD_DIR: /app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+  web:
+    build: .
+    command:
+      [
+        "node",
+        "node_modules/next/dist/bin/next",
+        "start",
+        "--hostname",
+        "0.0.0.0",
+      ]
+    environment: *app-env
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  worker:
+    build: .
+    command: ["npm", "run", "worker"]
+    environment: *app-env
+    volumes:
+      - uploads:/app/uploads
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+volumes:
+  pgdata:
+  uploads:
